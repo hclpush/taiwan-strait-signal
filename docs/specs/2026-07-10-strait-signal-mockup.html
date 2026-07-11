@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台海燈號 Strait Signal — 設計示意 Mockup</title>
+<style>
+  /* ============ tokens ============ */
+  :root{
+    --paper:#faf9f5; --surface:#fffefb; --ink:#1a1917; --ink2:#52514e; --muted:#8a8880;
+    --hairline:#e6e4dc; --ring:rgba(26,25,23,.08);
+    --l1:#0ca30c; --l2:#fab219; --l3:#ec835a; --l4:#d03b3b; --l5:#6d28d9;
+    --l1t:#d9eed9; --l2t:#f7e7bd; --l3t:#f8ddd0; --l4t:#f2cfcf; --l5t:#e3d9f7;
+    --circle:#c23b2e;
+    --serif:Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#121211; --surface:#191917; --ink:#f4f3ee; --ink2:#c3c2b7; --muted:#8a8880;
+      --hairline:#2c2c2a; --ring:rgba(255,255,255,.10);
+      --l5:#8b5cf6;
+      --l1t:#153015; --l2t:#3d2e08; --l3t:#3f1f12; --l4t:#3a1414; --l5t:#261b47;
+      --circle:#e05a4b;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75;font-size:16px}
+  ::selection{background:var(--l2t)}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+  a{color:inherit}
+  /* language toggle */
+  [data-lang="zh"] .en{display:none!important}
+  [data-lang="en"] .zh{display:none!important}
+  /* ============ header ============ */
+  header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--hairline)}
+  .bar{display:flex;align-items:center;gap:18px;padding:12px 0}
+  .brand{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+  .brand small{font-family:var(--sans);font-weight:600;font-size:11px;color:var(--muted);letter-spacing:.14em;margin-left:8px}
+  nav{display:flex;gap:20px;font-size:13px;color:var(--ink2);margin-left:auto}
+  nav a{text-decoration:none;padding:4px 0}
+  nav a:hover{color:var(--ink)}
+  .lang-btn{border:1px solid var(--hairline);background:var(--surface);color:var(--ink2);border-radius:999px;padding:4px 14px;font-size:12.5px;cursor:pointer;font-family:var(--sans)}
+  .lang-btn:hover{color:var(--ink);border-color:var(--muted)}
+  .live-chip{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink2);border:1px solid var(--hairline);border-radius:999px;padding:4px 12px;background:var(--surface)}
+  .live-chip .dot{width:9px;height:9px;border-radius:50%;background:var(--l2);box-shadow:0 0 0 2px var(--surface)}
+  @media(max-width:820px){nav{display:none}}
+  /* ============ hero ============ */
+  .hero{position:relative;border-bottom:1px solid var(--hairline);overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(90% 130% at 15% 0%,var(--l2t) 0%,transparent 55%);opacity:.55;pointer-events:none}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;padding:64px 0 56px}
+  @media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:36px;padding:44px 0}}
+  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+  .level-line{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+  .level-num{font-size:104px;font-weight:750;line-height:1;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:proportional-nums}
+  .level-num .of{font-size:26px;color:var(--muted);font-weight:600;letter-spacing:0}
+  .level-name{font-family:var(--serif);font-size:44px;font-weight:700;line-height:1.15}
+  .level-name .sub{display:block;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.24em;color:var(--muted);margin-top:4px}
+  .level-badge{align-self:center;background:var(--l2);color:#1a1917;font-weight:700;font-size:13px;border-radius:8px;padding:5px 12px;letter-spacing:.05em}
+  .hero-desc{margin-top:22px;font-size:17.5px;color:var(--ink2);max-width:34em}
+  .hero-meta{margin-top:26px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--ink2)}
+  .demo-badge{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--circle);border:1.5px dashed var(--circle);border-radius:6px;padding:3px 10px}
+  /* circled date — the clipping motif */
+  .circled{position:relative;display:inline-block;padding:2px 10px;font-weight:600;color:var(--ink)}
+  .circled svg{position:absolute;inset:-6px -8px;width:calc(100% + 16px);height:calc(100% + 12px);overflow:visible}
+  .circled svg path{fill:none;stroke:var(--circle);stroke-width:2.1;stroke-linecap:round;opacity:.9}
+  /* meter card */
+  .meter-card{background:var(--surface);border:1px solid var(--hairline);border-radius:18px;padding:26px 26px 22px;box-shadow:0 1px 2px var(--ring)}
+  .meter-title{font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
+  .meter{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+  .seg{height:14px;border-radius:3px}
+  .seg.on1{background:var(--l1)} .seg.on2{background:var(--l2)}
+  .seg.off3{background:var(--l3t)} .seg.off4{background:var(--l4t)} .seg.off5{background:var(--l5t)}
+  .seg.cur{position:relative;border-radius:3px 8px 8px 3px}
+  .seg.cur::after{content:"";position:absolute;top:-7px;right:-2px;width:3px;height:28px;border-radius:2px;background:var(--ink)}
+  .meter-labels{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:10px;font-size:11.5px;color:var(--muted);text-align:center}
+  .meter-labels b{display:block;font-size:13px;color:var(--ink2);font-weight:650}
+  .meter-labels .active b{color:var(--ink);font-weight:750}
+  .why{margin-top:20px;border-top:1px solid var(--hairline);padding-top:16px;font-size:13.5px;color:var(--ink2)}
+  .why b{color:var(--ink)}
+  .act-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-size:12.5px;border:1px solid var(--hairline);background:var(--paper);border-radius:999px;padding:4px 12px;color:var(--ink2)}
+  .chip b{color:var(--ink);font-weight:650}
+  /* ============ sections ============ */
+  section{padding:64px 0;border-bottom:1px solid var(--hairline)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:10px}
+  .sec-no{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.1em}
+  h2{font-family:var(--serif);font-size:30px;font-weight:700;letter-spacing:.01em;text-wrap:balance}
+  h2 .en-sub, .sec-lede{color:var(--ink2)}
+  .sec-lede{font-size:15.5px;max-width:46em;margin-bottom:36px}
+  /* level cards */
+  .levels{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  @media(max-width:880px){.levels{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.levels{grid-template-columns:1fr}}
+  .lv{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:18px 16px;display:flex;flex-direction:column;gap:8px}
+  .lv.current{outline:2px solid var(--l2);outline-offset:1px}
+  .lv-top{display:flex;align-items:center;gap:10px}
+  .lv-dot{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12.5px;font-weight:800;color:#fff}
+  .lv-dot.d2{color:#1a1917}
+  .lv h3{font-size:16.5px;font-weight:700}
+  .lv .lv-en{font-size:10.5px;font-weight:700;letter-spacing:.16em;color:var(--muted)}
+  .lv p{font-size:12.8px;color:var(--ink2);line-height:1.65}
+  .lv .do{font-size:12.8px;border-top:1px solid var(--hairline);padding-top:8px;margin-top:auto}
+  .lv .do b{font-weight:700}
+  /* indicators */
+  .cat{margin-bottom:34px}
+  .cat-h{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .cat-h h3{font-family:var(--serif);font-size:20px;font-weight:700}
+  .cat-h span{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--muted)}
+  .ind{display:grid;grid-template-columns:15px 1fr auto;gap:14px;align-items:start;padding:15px 4px;border-top:1px solid var(--hairline)}
+  .ind:first-of-type{border-top:none}
+  .pip{width:13px;height:13px;border-radius:50%;margin-top:6px;border:1.6px solid var(--muted);background:transparent}
+  .pip.half{border-color:var(--l2);background:linear-gradient(90deg,var(--l2) 50%,transparent 50%)}
+  .pip.full{border-color:var(--l4);background:var(--l4)}
+  .ind-name{font-size:15.5px;font-weight:650}
+  .ind-note{font-size:13px;color:var(--ink2);margin-top:2px;max-width:42em}
+  .ind-note a{color:var(--ink2)}
+  .ustag{justify-self:end;text-align:right;font-size:11.8px;color:var(--muted);border:1px solid var(--hairline);border-radius:8px;padding:5px 10px;background:var(--surface);max-width:210px}
+  .ustag b{display:block;color:var(--ink2);font-weight:700;font-size:11.5px;letter-spacing:.04em}
+  @media(max-width:640px){.ind{grid-template-columns:15px 1fr}.ustag{display:none}}
+  .status-key{display:flex;gap:18px;font-size:12.5px;color:var(--ink2);margin-bottom:26px;flex-wrap:wrap}
+  .status-key span{display:flex;align-items:center;gap:7px}
+  /* timeline */
+  .tl{position:relative;margin-left:8px;padding-left:34px}
+  .tl::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--hairline)}
+  .ev{position:relative;padding:0 0 26px}
+  .ev::before{content:"";position:absolute;left:-39px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 3px var(--paper)}
+  .ev.war::before{background:var(--l4);width:13px;height:13px;left:-41px}
+  .ev-date{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .dday{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--ink2);background:var(--surface);border:1px solid var(--hairline);padding:2px 9px;border-radius:999px}
+  .ev.war .dday{background:var(--l4);color:#fff;border-color:var(--l4)}
+  .ev-t{font-size:15.5px;margin-top:5px}
+  .ev-tag{font-size:11px;color:var(--muted);margin-left:8px}
+  .ev.war .ev-t{font-weight:750;font-size:17px}
+  /* principles */
+  .prins{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.prins{grid-template-columns:1fr}}
+  .prin{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:20px 22px}
+  .prin .no{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--muted)}
+  .prin h3{font-size:16.5px;font-weight:700;margin:6px 0 4px}
+  .prin p{font-size:13.5px;color:var(--ink2)}
+  /* actions table */
+  .acts .row{display:grid;grid-template-columns:130px 1fr;gap:18px;padding:16px 0;border-top:1px solid var(--hairline)}
+  .acts .row:first-child{border-top:none}
+  .acts .who{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14.5px}
+  .acts .who i{width:12px;height:12px;border-radius:4px;flex:none}
+  .acts p{font-size:14px;color:var(--ink2)}
+  @media(max-width:560px){.acts .row{grid-template-columns:1fr;gap:4px}}
+  /* limits */
+  .limits{background:var(--surface);border:1px solid var(--hairline);border-radius:18px;padding:30px 32px}
+  .limits ul{list-style:none;display:grid;gap:12px;margin-top:14px}
+  .limits li{padding-left:22px;position:relative;font-size:14.5px;color:var(--ink2)}
+  .limits li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+  /* footer */
+  footer{padding:40px 0 64px;color:var(--muted);font-size:13px}
+  footer .cols{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  footer a{color:var(--ink2)}
+</style>
+<body data-lang="zh">
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">台海燈號<small>STRAIT SIGNAL</small></div>
+    <nav>
+      <a href="#levels"><span class="zh">五級燈號</span><span class="en">Levels</span></a>
+      <a href="#indicators"><span class="zh">觀測指標</span><span class="en">Indicators</span></a>
+      <a href="#timeline"><span class="zh">烏克蘭時間軸</span><span class="en">Ukraine Timeline</span></a>
+      <a href="#actions"><span class="zh">行動指南</span><span class="en">Preparedness</span></a>
+    </nav>
+    <div class="live-chip"><span class="dot"></span><span class="zh">目前第 2 級</span><span class="en">Now Level 2</span></div>
+    <button class="lang-btn" onclick="document.body.dataset.lang=document.body.dataset.lang==='zh'?'en':'zh'">
+      <span class="zh">EN</span><span class="en">中文</span>
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="zh">目前燈號 · CURRENT SIGNAL</span><span class="en">CURRENT SIGNAL · 目前燈號</span></div>
+      <div class="level-line">
+        <div class="level-num">2<span class="of"> / 5</span></div>
+        <div class="level-name">
+          <span class="zh">留意</span><span class="en">Elevated</span>
+          <span class="sub"><span class="zh">ELEVATED</span><span class="en">留意</span></span>
+        </div>
+        <div class="level-badge"><span class="zh">黃燈</span><span class="en">AMBER</span></div>
+      </div>
+      <p class="hero-desc">
+        <span class="zh">背景張力升高：演習與言詞警告增加，但尚未出現「撤離級」訊號——沒有任何國家撤離駐台使館眷屬，也沒有「勿前往」等級的旅遊警示。適合做低成本的預先準備。</span>
+        <span class="en">Background tension is elevated: exercises and verbal warnings are up, but no evacuation-class signal has appeared — no country has withdrawn embassy dependents from Taipei, and no "do not travel" advisory is in effect. A good moment for low-cost preparation.</span>
+      </p>
+      <div class="hero-meta">
+        <span class="circled">2026/07/10
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M8,20 C6,7 30,2 52,3 C78,4 96,9 95,20 C94,32 70,38 46,37 C22,36 9,31 8,22"/></svg>
+        </span>
+        <span><span class="zh">最後審視 · 每週更新</span><span class="en">Last reviewed · updated weekly</span></span>
+        <span class="demo-badge"><span class="zh">設計示意 · 非真實評估</span><span class="en">DESIGN MOCKUP · NOT A REAL ASSESSMENT</span></span>
+      </div>
+    </div>
+    <div class="meter-card">
+      <div class="meter-title"><span class="zh">燈號量表 · SIGNAL SCALE</span><span class="en">SIGNAL SCALE · 燈號量表</span></div>
+      <div class="meter">
+        <div class="seg on1"></div>
+        <div class="seg on2 cur"></div>
+        <div class="seg off3"></div>
+        <div class="seg off4"></div>
+        <div class="seg off5"></div>
+      </div>
+      <div class="meter-labels">
+        <div><b>1</b><span class="zh">平時</span><span class="en">Calm</span></div>
+        <div class="active"><b>2</b><span class="zh">留意</span><span class="en">Elevated</span></div>
+        <div><b>3</b><span class="zh">警戒</span><span class="en">Serious</span></div>
+        <div><b>4</b><span class="zh">高度警戒</span><span class="en">Critical</span></div>
+        <div><b>5</b><span class="zh">撤離</span><span class="en">Imminent</span></div>
+      </div>
+      <div class="why">
+        <b><span class="zh">為什麼是第 2 級？</span><span class="en">Why Level 2?</span></b>
+        <span class="zh"> 14 項指標中：2 項出現跡象、0 項已觸發、0 項撤離級訊號。</span>
+        <span class="en"> Of 14 indicators: 2 showing signs, 0 triggered, 0 evacuation-class signals.</span>
+      </div>
+      <div class="act-chips">
+        <span class="chip"><b><span class="zh">現在做</span><span class="en">Do now</span></b></span>
+        <span class="chip"><span class="zh">證件影本雲端備份</span><span class="en">Back up documents</span></span>
+        <span class="chip"><span class="zh">兩週藥品與現金</span><span class="en">2 weeks meds &amp; cash</span></span>
+        <span class="chip"><span class="zh">家庭聯絡計畫</span><span class="en">Family contact plan</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="levels">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">01</span>
+      <h2><span class="zh">五級燈號</span><span class="en">The Five Levels</span></h2>
+    </div>
+    <p class="sec-lede">
+      <span class="zh">燈號由公開指標決定，規則透明：哪一級、為什麼、該做什麼，一眼看懂。分級邏輯參考烏克蘭開戰前 117 天的實際順序。</span>
+      <span class="en">The level is computed from public indicators by a transparent rule: which level, why, and what to do — at a glance. The tiers follow the actual 117-day sequence before the Ukraine invasion.</span>
+    </p>
+    <div class="levels">
+      <div class="lv">
+        <div class="lv-top"><span class="lv-dot" style="background:var(--l1)">1</span><div><h3><span class="zh">平時</span><span class="en">Calm</span></h3><span class="lv-en"><span class="zh">CALM</span><span class="en">平時</span></span></div></div>
+        <p><span class="zh">例行軍演與言詞交鋒，屬長期背景噪音。</span><span class="en">Routine exercises and rhetoric — long-term background noise.</span></p>
+        <p class="do"><b><span class="zh">行動：</span><span class="en">Do: </span></b><span class="zh">知道這個網站存在就好。</span><span class="en">Just know this page exists.</span></p>
+      </div>
+      <div class="lv current">
+        <div class="lv-top"><span class="lv-dot d2" style="background:var(--l2)">2</span><div><h3><span class="zh">留意</span><span class="en">Elevated</span></h3><span class="lv-en"><span class="zh">ELEVATED</span><span class="en">留意</span></span></div></div>
+        <p><span class="zh">演習規模／頻率異常，出現公開情報警告。</span><span class="en">Unusual exercise scale or tempo; public intelligence warnings appear.</span></p>
+        <p class="do"><b><span class="zh">行動：</span><span class="en">Do: </span></b><span class="zh">備妥證件、現金、藥品清單。</span><span class="en">Documents, cash, medication list.</span></p>
+      </div>
+      <div class="lv">
+        <div class="lv-top"><span class="lv-dot" style="background:var(--l3)">3</span><div><h3><span class="zh">警戒</span><span class="en">Serious</span></h3><span class="lv-en"><span class="zh">SERIOUS</span><span class="en">警戒</span></span></div></div>
+        <p><span class="zh">持續性兵力集結獲多方證實，後勤動員跡象（如血漿儲備）。</span><span class="en">Sustained buildup confirmed by multiple sources; logistics mobilization signs (e.g., blood supplies).</span></p>
+        <p class="do"><b><span class="zh">行動：</span><span class="en">Do: </span></b><span class="zh">打包避難包，確認離境選項。</span><span class="en">Pack a go-bag; confirm exit options.</span></p>
+      </div>
+      <div class="lv">
+        <div class="lv-top"><span class="lv-dot" style="background:var(--l4)">4</span><div><h3><span class="zh">高度警戒</span><span class="en">Critical</span></h3><span class="lv-en"><span class="zh">CRITICAL</span><span class="en">高度警戒</span></span></div></div>
+        <p><span class="zh">撤離級訊號：使館縮編、撤離眷屬、「勿前往」旅遊警示。</span><span class="en">Evacuation-class signals: embassy drawdowns, dependents withdrawn, "do not travel" advisories.</span></p>
+        <p class="do"><b><span class="zh">行動：</span><span class="en">Do: </span></b><span class="zh">非必要滯留者離境或移往低風險區。</span><span class="en">Leave if you can; relocate away from military targets.</span></p>
+      </div>
+      <div class="lv">
+        <div class="lv-top"><span class="lv-dot" style="background:var(--l5)">5</span><div><h3><span class="zh">撤離</span><span class="en">Imminent</span></h3><span class="lv-en"><span class="zh">IMMINENT</span><span class="en">撤離</span></span></div></div>
+        <p><span class="zh">使館關閉、最後通牒式警告——烏克蘭經驗：剩下不到兩週。</span><span class="en">Embassies close; final warnings issue — in Ukraine, under two weeks remained.</span></p>
+        <p class="do"><b><span class="zh">行動：</span><span class="en">Do: </span></b><span class="zh">立即執行你的計畫，不再等待確認。</span><span class="en">Execute your plan immediately. Stop waiting for certainty.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="indicators">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">02</span>
+      <h2><span class="zh">觀測指標</span><span class="en">Indicator Board</span></h2>
+    </div>
+    <p class="sec-lede">
+      <span class="zh">14 項放諸四海皆準的開戰徵兆，每項都對照烏克蘭戰前的實際事件與倒數天數。每週依公開報導審視一次，附來源連結。</span>
+      <span class="en">Fourteen universal war precursors, each mapped to the actual pre-invasion Ukraine event and its countdown. Reviewed weekly against public reporting, with sources linked.</span>
+    </p>
+    <div class="status-key">
+      <span><span class="pip"></span><span class="zh">未觸發</span><span class="en">Not triggered</span></span>
+      <span><span class="pip half"></span><span class="zh">出現跡象</span><span class="en">Signs appearing</span></span>
+      <span><span class="pip full"></span><span class="zh">已觸發</span><span class="en">Triggered</span></span>
+    </div>
+
+    <div class="cat">
+      <div class="cat-h"><h3><span class="zh">軍事動員</span><span class="en">Military Mobilization</span></h3><span>MILITARY</span></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">對台當面兵力異常集結</span><span class="en">Unusual force concentration opposite Taiwan</span></div><div class="ind-note"><span class="zh">衛星影像與西方國防部門公開評估未見持續性集結。</span><span class="en">No sustained buildup in satellite imagery or Western defense assessments.</span> <a href="#">[來源 Source]</a></div></div><div class="ustag"><b>烏克蘭 D−117</b><span class="zh">2021/10/30 邊境調動軍隊</span><span class="en">2021/10/30 Border troop movements</span></div></div>
+      <div class="ind"><span class="pip half"></span><div><div class="ind-name"><span class="zh">大規模實彈演習頻率</span><span class="en">Large-scale live-fire exercise tempo</span></div><div class="ind-note"><span class="zh">〔示意〕環台演習頻率高於去年同期，但規模屬近年常態。</span><span class="en">[Demo] Exercise tempo above last year, scale within recent norms.</span> <a href="#">[來源 Source]</a></div></div><div class="ustag"><b>烏克蘭 D−83</b><span class="zh">2021/12/03 17.5 萬俄軍集結</span><span class="en">2021/12/03 175k troops massed</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">醫療後勤動員（血漿儲備）</span><span class="en">Medical logistics (blood supplies)</span></div><div class="ind-note"><span class="zh">開戰的最後準備之一：無法用「演習」解釋的訊號。</span><span class="en">One of the last steps before war — a signal exercises can't explain.</span></div></div><div class="ustag"><b>烏克蘭 D−26</b><span class="zh">2022/01/29 前線儲備血漿</span><span class="en">2022/01/29 Blood plasma staged</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">民用滾裝船／漁船徵用</span><span class="en">Civilian RO-RO ferry requisition</span></div><div class="ind-note"><span class="zh">渡海作戰的專屬前兆——台海版的「邊境集結」。</span><span class="en">The amphibious-specific precursor — the strait's version of a border buildup.</span></div></div><div class="ustag"><b><span class="zh">台海特有指標</span><span class="en">Strait-specific</span></b><span class="zh">烏克蘭無對應事件</span><span class="en">No Ukraine analog</span></div></div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-h"><h3><span class="zh">外交與撤離</span><span class="en">Diplomatic &amp; Evacuation</span></h3><span>EVACUATION-CLASS</span></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">各國縮減駐台使館規模</span><span class="en">Embassy drawdowns in Taipei</span></div><div class="ind-note"><span class="zh">最強訊號之一：政府用行動投票。</span><span class="en">Among the strongest signals: governments voting with their feet.</span></div></div><div class="ustag"><b>烏克蘭 D−38</b><span class="zh">2022/01/17 俄縮編駐烏使館</span><span class="en">2022/01/17 Russia cuts Kyiv embassy</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">撤離外交官眷屬、敦促公民離境</span><span class="en">Dependents withdrawn; citizens urged to leave</span></div><div class="ind-note"><span class="zh">烏克蘭經驗：此訊號出現後 31 天開戰。</span><span class="en">In Ukraine, war came 31 days after this signal.</span></div></div><div class="ustag"><b>烏克蘭 D−31</b><span class="zh">2022/01/24 美撤離使館家眷</span><span class="en">2022/01/24 US withdraws dependents</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">關閉大使館／代表處</span><span class="en">Embassies close outright</span></div><div class="ind-note"><span class="zh">最後的訊號。</span><span class="en">The final signal.</span></div></div><div class="ustag"><b>烏克蘭 D−10</b><span class="zh">2022/02/14 美關閉基輔使館</span><span class="en">2022/02/14 US closes Kyiv embassy</span></div></div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-h"><h3><span class="zh">官方警告</span><span class="en">Official Warnings</span></h3><span>WARNINGS</span></div>
+      <div class="ind"><span class="pip half"></span><div><div class="ind-name"><span class="zh">美方情報體系公開警告</span><span class="en">US intelligence public warnings</span></div><div class="ind-note"><span class="zh">〔示意〕例行國會聽證提及風險升高；尚無具體時程警告。</span><span class="en">[Demo] Routine testimony notes elevated risk; no timeline warnings.</span> <a href="#">[來源 Source]</a></div></div><div class="ustag"><b>烏克蘭 D−104</b><span class="zh">2021/11/12 美首次公開警告</span><span class="en">2021/11/12 First US warning</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">旅遊警示升至「勿前往」</span><span class="en">Travel advisory hits "Do Not Travel"</span></div><div class="ind-note"><span class="zh">美國國務院對台警示目前為第 1 級（示意）。</span><span class="en">US State Dept advisory for Taiwan currently Level 1 (demo).</span></div></div><div class="ustag"><b>烏克蘭 D−65</b><span class="zh">2021/12/21 第 4 級「勿前往」</span><span class="en">2021/12/21 Level 4 issued</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">國家元首點名式警告</span><span class="en">Head-of-state warnings by name</span></div><div class="ind-note"><span class="zh">總統親自警告＝情報信心極高。</span><span class="en">A president warning personally = very high intelligence confidence.</span></div></div><div class="ustag"><b>烏克蘭 D−36</b><span class="zh">2022/01/19 拜登：俄將入侵</span><span class="en">2022/01/19 Biden: Russia will invade</span></div></div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-h"><h3><span class="zh">經濟與資訊</span><span class="en">Economy &amp; Information</span></h3><span>ECONOMY / INFO</span></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">戰略物資異常囤積（糧食、能源、金屬）</span><span class="en">Strategic stockpiling surge (grain, energy, metals)</span></div><div class="ind-note"><span class="zh">制裁抗性準備：進口量對比歷史基線。</span><span class="en">Sanctions-proofing: import volumes vs. historical baseline.</span></div></div><div class="ustag"><b><span class="zh">俄羅斯 2021 全年</span><span class="en">Russia, through 2021</span></b><span class="zh">外儲去美元化</span><span class="en">De-dollarizing reserves</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">對台網攻與認知作戰激增</span><span class="en">Cyberattack &amp; influence-op surge</span></div><div class="ind-note"><span class="zh">開戰前數週通常先打看不見的戰爭。</span><span class="en">The invisible war usually starts weeks early.</span></div></div><div class="ustag"><b>烏克蘭 D−41</b><span class="zh">2022/01/14 政府網站遭攻擊</span><span class="en">2022/01/14 Gov sites defaced</span></div></div>
+      <div class="ind"><span class="pip"></span><div><div class="ind-name"><span class="zh">官媒戰爭動員敘事</span><span class="en">State-media war-mobilization narrative</span></div><div class="ind-note"><span class="zh">從「統一」語彙轉向「不得不戰」語彙。</span><span class="en">Language shifting from "unification" to "no choice but war."</span></div></div><div class="ustag"><b><span class="zh">普遍前兆</span><span class="en">Universal precursor</span></b><span class="zh">開戰合理化敘事</span><span class="en">Casus belli building</span></div></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted)"><span class="zh">…示意版僅列 13 項，正式版含完整 14 項指標與歷史狀態紀錄。</span><span class="en">…Mockup shows 13; the full board carries 14 indicators with status history.</span></p>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">03</span>
+      <h2><span class="zh">戰爭從未突然爆發</span><span class="en">War Never Breaks Out Suddenly</span></h2>
+    </div>
+    <p class="sec-lede">
+      <span class="zh">把烏俄戰爭前的新聞剪下來、依日期排列，你會發現：戰爭早就在大家每天滑過的新聞裡，一步一步逼近。紅圈是我們圈起來的日期——每一則都是公開報導。</span>
+      <span class="en">Clip the pre-war headlines, line them up by date, and you'll see it: the war was approaching step by step, inside the news everyone scrolled past. Every red-circled date is public reporting.</span>
+    </p>
+    <div class="tl">
+      <div class="ev"><div class="ev-date"><span class="circled">2021/10/30<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M9,21 C5,8 28,2 51,3 C77,4 95,8 94,19 C93,31 71,38 45,37 C21,36 10,32 9,23"/></svg></span><span class="dday">D−117</span></div><div class="ev-t"><span class="zh">俄羅斯在烏克蘭邊境調動軍隊</span><span class="en">Russia moves troops to the Ukrainian border</span><span class="ev-tag"><span class="zh">軍事</span><span class="en">Military</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2021/11/12<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M8,19 C7,7 31,1 53,3 C78,5 96,10 94,21 C92,32 69,38 44,36 C20,34 9,30 8,21"/></svg></span><span class="dday">D−104</span></div><div class="ev-t"><span class="zh">美國警告俄羅斯可能入侵烏克蘭</span><span class="en">US warns Russia may invade Ukraine</span><span class="ev-tag"><span class="zh">警告</span><span class="en">Warning</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2021/12/03<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M10,20 C7,9 29,3 50,3 C76,3 94,9 93,20 C92,31 70,37 46,36 C22,35 11,31 10,22"/></svg></span><span class="dday">D−83</span></div><div class="ev-t"><span class="zh">美國情報：17.5 萬俄軍集結</span><span class="en">US intelligence: 175,000 Russian troops massed</span><span class="ev-tag"><span class="zh">軍事</span><span class="en">Military</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2021/12/21<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M8,20 C6,8 30,2 52,3 C77,4 95,9 94,20 C93,32 68,38 44,37 C21,36 9,31 8,22"/></svg></span><span class="dday">D−65</span></div><div class="ev-t"><span class="zh">美國國務院：「勿前往烏克蘭」（第 4 級旅遊警示）</span><span class="en">US State Dept: "Do not travel to Ukraine" (Level 4)</span><span class="ev-tag"><span class="zh">警告</span><span class="en">Warning</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2022/01/17<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M9,20 C6,8 28,2 50,3 C76,4 94,9 93,20 C92,31 70,38 45,37 C22,36 10,31 9,22"/></svg></span><span class="dday">D−38</span></div><div class="ev-t"><span class="zh">俄羅斯縮減駐烏克蘭使館規模</span><span class="en">Russia draws down its Kyiv embassy</span><span class="ev-tag"><span class="zh">撤離</span><span class="en">Evacuation</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2022/01/24<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M8,21 C6,9 29,2 51,3 C77,4 95,9 94,20 C93,31 69,38 45,37 C21,36 9,32 8,23"/></svg></span><span class="dday">D−31</span></div><div class="ev-t"><span class="zh">美國撤離大使館家眷，敦促公民離境</span><span class="en">US withdraws embassy families, urges citizens to leave</span><span class="ev-tag"><span class="zh">撤離</span><span class="en">Evacuation</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2022/01/29<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M9,19 C7,7 30,2 52,3 C78,4 95,10 94,21 C93,32 69,38 44,36 C21,35 10,30 9,21"/></svg></span><span class="dday">D−26</span></div><div class="ev-t"><span class="zh">俄羅斯於前線準備血漿</span><span class="en">Russia stages blood plasma at the front</span><span class="ev-tag"><span class="zh">後勤</span><span class="en">Logistics</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2022/02/14<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M8,20 C6,8 29,2 51,3 C77,4 94,9 93,20 C92,31 69,37 45,36 C21,35 9,31 8,22"/></svg></span><span class="dday">D−10</span></div><div class="ev-t"><span class="zh">美國關閉基輔大使館</span><span class="en">US closes its Kyiv embassy</span><span class="ev-tag"><span class="zh">撤離</span><span class="en">Evacuation</span></span></div></div>
+      <div class="ev"><div class="ev-date"><span class="circled">2022/02/20<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M9,20 C7,8 30,3 52,3 C77,3 95,9 94,20 C93,31 70,38 45,37 C22,36 10,31 9,22"/></svg></span><span class="dday">D−4</span></div><div class="ev-t"><span class="zh">美國最後一次警告</span><span class="en">The final US warning</span><span class="ev-tag"><span class="zh">警告</span><span class="en">Warning</span></span></div></div>
+      <div class="ev war"><div class="ev-date"><span class="circled">2022/02/24<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M8,20 C5,7 29,1 52,2 C78,3 96,8 95,20 C94,33 69,39 44,38 C20,37 9,32 8,22 C7,12 20,5 38,4"/></svg></span><span class="dday">D−0</span></div><div class="ev-t"><span class="zh">清晨，俄羅斯全面入侵烏克蘭</span><span class="en">At dawn, Russia launches its full-scale invasion</span></div></div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px"><span class="zh">示意版節錄 10 則；正式版含全部 13 則剪報與原始報導連結。</span><span class="en">Mockup excerpts 10 of 13 clippings; the full version links every original report.</span></p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">04</span>
+      <h2><span class="zh">如何自己判讀</span><span class="en">How to Read the Signs Yourself</span></h2>
+    </div>
+    <p class="sec-lede">
+      <span class="zh">你不需要內線消息。一般人光是正確分析公開情報，就足以救自己跟家人一命。</span>
+      <span class="en">You don't need inside information. Correctly reading public sources is enough to save your family's life.</span>
+    </p>
+    <div class="prins">
+      <div class="prin"><div class="no">一</div><h3><span class="zh">看行動，不看言詞</span><span class="en">Watch actions, not words</span></h3><p><span class="zh">言詞威脅是常態；調動兵力、儲備血漿、燒錢的事才是訊號。</span><span class="en">Threats are routine; moving troops and staging blood — things that cost money — are signals.</span></p></div>
+      <div class="prin"><div class="no">二</div><h3><span class="zh">眷屬撤離是最強訊號</span><span class="en">Dependents leaving is the strongest signal</span></h3><p><span class="zh">政府可以虛張聲勢，但不會拿自己外交官的家人冒險。</span><span class="en">Governments bluff — but never with their own diplomats' families.</span></p></div>
+      <div class="prin"><div class="no">三</div><h3><span class="zh">要求多個獨立來源</span><span class="en">Demand independent sources</span></h3><p><span class="zh">單一媒體會錯；美、歐、日官方動作同向，才算確認。</span><span class="en">One outlet can be wrong; US, European, and Japanese officials moving the same way is confirmation.</span></p></div>
+      <div class="prin"><div class="no">四</div><h3><span class="zh">為每則新聞標上日期</span><span class="en">Date every headline</span></h3><p><span class="zh">單則新聞是雜訊，排上時間軸才看得見「加速度」。</span><span class="en">A single headline is noise; on a timeline you can see acceleration.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="actions">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">05</span>
+      <h2><span class="zh">分級行動指南</span><span class="en">Preparedness, Level by Level</span></h2>
+    </div>
+    <p class="sec-lede">
+      <span class="zh">每一級只要求「當下值得做」的事——太早做浪費，太晚做危險。</span>
+      <span class="en">Each level asks only what's worth doing now — too early is wasteful, too late is dangerous.</span>
+    </p>
+    <div class="acts">
+      <div class="row"><div class="who"><i style="background:var(--l1)"></i><span class="zh">第 1 級</span><span class="en">Level 1</span></div><p><span class="zh">把這個網站加入書籤，跟家人約好「如果升級，我們用哪個群組聯絡」。</span><span class="en">Bookmark this page; agree with family which group chat is the emergency channel.</span></p></div>
+      <div class="row"><div class="who"><i style="background:var(--l2)"></i><span class="zh">第 2 級</span><span class="en">Level 2</span></div><p><span class="zh">護照效期檢查、證件影本雲端備份、兩週份常用藥、一筆隨時可動用的現金。</span><span class="en">Check passport validity; back up documents to the cloud; two weeks of medication; accessible cash.</span></p></div>
+      <div class="row"><div class="who"><i style="background:var(--l3)"></i><span class="zh">第 3 級</span><span class="en">Level 3</span></div><p><span class="zh">打包避難包（水、糧、藥、電源、收音機）、確認離境航班與親友住處選項、下載離線地圖。</span><span class="en">Pack the go-bag (water, food, meds, power, radio); confirm flight and relative-stay options; offline maps.</span></p></div>
+      <div class="row"><div class="who"><i style="background:var(--l4)"></i><span class="zh">第 4 級</span><span class="en">Level 4</span></div><p><span class="zh">可離境者離境；留下者移往遠離軍事目標的住處，加購糧水與燃料。</span><span class="en">Those who can leave, leave; those who stay relocate away from military targets and stock up.</span></p></div>
+      <div class="row"><div class="who"><i style="background:var(--l5)"></i><span class="zh">第 5 級</span><span class="en">Level 5</span></div><p><span class="zh">立即執行計畫。烏克蘭的教訓：等到「確定」時，機場已經關了。</span><span class="en">Execute now. Ukraine's lesson: by the time it was "certain," the airport was closed.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="limits" style="border-bottom:none">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">06</span>
+      <h2><span class="zh">本站不能告訴你的事</span><span class="en">What This Site Cannot Tell You</span></h2>
+    </div>
+    <div class="limits">
+      <ul>
+        <li><span class="zh">公開情報有延遲——燈號反映的是「已被報導的世界」，不是即時戰場。</span><span class="en">Public information lags — the signal reflects the reported world, not real time.</span></li>
+        <li><span class="zh">台海未必重演烏克蘭模式：渡海作戰可能更依賴突襲，預警期可能更短。</span><span class="en">The strait may not follow the Ukraine script: an amphibious war may lean on surprise, with less warning.</span></li>
+        <li><span class="zh">威懾表演可能觸發指標卻不開戰——燈號會有「誤報」，寧可誤報，不可漏報。</span><span class="en">Deterrence theater can trip indicators without war — false alarms will happen; we prefer them to silence.</span></li>
+        <li><span class="zh">本站非官方、非預測、非投資建議。它只做一件事：幫你把公開訊號排好，讓你自己判斷。</span><span class="en">Not official, not a prediction, not advice. It does one thing: arrange the public signals so you can judge for yourself.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <span class="zh">台海燈號 · 由 <a href="#">Lezbyte</a> 維護 · 源自〈戰爭從未突然爆發〉</span>
+      <span class="en">Strait Signal · maintained by <a href="#">Lezbyte</a> · born from "War Never Breaks Out Suddenly"</span>
+    </div>
+    <div><span class="zh">設計示意稿 · 2026/07/10 · 資料皆為示意</span><span class="en">Design mockup · 2026/07/10 · all data illustrative</span></div>
+  </div>
+</footer>
+</body>
+</html>

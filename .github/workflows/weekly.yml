@@ -1,0 +1,137 @@
+# Weekly signal update — the production pipeline runner.
+#
+# Three isolated phases (see README):
+#   A fetch    deterministic Python, Firecrawl REST, domain-whitelisted snippets
+#   B classify headless Claude Code: prompt in → JSON out. ZERO tools, MCP
+#              disabled — the model cannot touch files, network, or secrets,
+#              so injected instructions in fetched text have nothing to drive.
+#   C apply    deterministic guardrails → data/ → build → Pages deploy.
+#              On level change it writes level-change.json and this workflow
+#              opens a GitHub Issue (which emails the repo owner).
+#
+# Secrets required: FIRECRAWL_API_KEY, CLAUDE_CODE_OAUTH_TOKEN (claude setup-token).
+# Note: the data commit is pushed with GITHUB_TOKEN, which deliberately does NOT
+# trigger deploy.yml — this workflow deploys Pages itself.
+
+name: weekly-signal-update
+
+on:
+  schedule:
+    - cron: "30 2 * * 1" # Mon 02:30 UTC = 週一 10:30 台北
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — validate and report only, publish nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  TZ: Asia/Taipei # run dates and 最後審視 follow Taiwan time
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Phase A — fetch whitelisted snippets
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: |
+          RUN_DIR="runs/$(date +%F)"
+          echo "RUN_DIR=$RUN_DIR" >> "$GITHUB_ENV"
+          mkdir -p "$RUN_DIR"
+          python3 pipeline/fetch.py --out "$RUN_DIR"
+
+      - name: Phase B — classify (zero-tool headless Claude)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude --print \
+            --strict-mcp-config --mcp-config ops/empty-mcp.json \
+            < "$RUN_DIR/classify-input.txt" > "$RUN_DIR/proposal-raw.txt"
+          test -s "$RUN_DIR/proposal-raw.txt"
+
+      - name: Phase C — apply guardrails and rebuild
+        env:
+          STRAIT_NOTIFY: github
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python3 pipeline/apply.py "$RUN_DIR" --dry-run
+          else
+            python3 pipeline/apply.py "$RUN_DIR"
+          fi
+
+      - name: Open issue on level change
+        if: ${{ inputs.dry_run != true }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f="$RUN_DIR/level-change.json"
+          if [ -f "$f" ]; then
+            jq -r .body "$f" > /tmp/issue-body.md
+            gh issue create \
+              --title "$(jq -r .title "$f")" \
+              --body-file /tmp/issue-body.md
+          else
+            echo "no level change this run"
+          fi
+
+      - name: Commit updated data
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "no data changes to commit"
+          else
+            git commit -m "weekly: $(date +%F) signal update [skip ci]"
+            git push
+          fi
+
+      - name: Upload run artifacts (transparency + debugging)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-${{ github.run_id }}
+          path: runs/
+          retention-days: 90
+
+      - name: Configure Pages
+        if: ${{ inputs.dry_run != true }}
+        uses: actions/configure-pages@v5
+
+      - name: Upload site
+        if: ${{ inputs.dry_run != true }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+      - name: Deploy to GitHub Pages
+        if: ${{ inputs.dry_run != true }}
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,25 @@
+{
+  "_comment": "Ukraine pre-invasion timeline — static content from the source article. dday = days before 2022/02/24. tag: mil|warn|evac|logi|war.",
+  "events": [
+    { "date": "2021/10/30", "dday": 117, "tag": "mil",  "zh": "俄羅斯在烏克蘭邊境調動軍隊", "en": "Russia moves troops to the Ukrainian border" },
+    { "date": "2021/11/12", "dday": 104, "tag": "warn", "zh": "美國警告俄羅斯可能入侵烏克蘭", "en": "US warns Russia may invade Ukraine" },
+    { "date": "2021/11/27", "dday": 89,  "tag": "warn", "zh": "美國再次警告", "en": "The US warns again" },
+    { "date": "2021/12/01", "dday": 85,  "tag": "warn", "zh": "美國國務卿公開警告", "en": "The US Secretary of State warns publicly" },
+    { "date": "2021/12/03", "dday": 83,  "tag": "mil",  "zh": "美國情報：17.5 萬俄軍集結", "en": "US intelligence: 175,000 Russian troops massed" },
+    { "date": "2021/12/21", "dday": 65,  "tag": "warn", "zh": "美國國務院：「勿前往烏克蘭」（第 4 級旅遊警示）", "en": "US State Dept: \"Do not travel to Ukraine\" (Level 4)" },
+    { "date": "2022/01/17", "dday": 38,  "tag": "evac", "zh": "俄羅斯縮減駐烏克蘭使館規模", "en": "Russia draws down its Kyiv embassy" },
+    { "date": "2022/01/19", "dday": 36,  "tag": "warn", "zh": "美國總統拜登警告俄羅斯將入侵", "en": "President Biden warns Russia will invade" },
+    { "date": "2022/01/24", "dday": 31,  "tag": "evac", "zh": "美國撤離大使館家眷，敦促公民離境", "en": "US withdraws embassy families, urges citizens to leave" },
+    { "date": "2022/01/29", "dday": 26,  "tag": "logi", "zh": "俄羅斯於前線準備血漿", "en": "Russia stages blood plasma at the front" },
+    { "date": "2022/02/14", "dday": 10,  "tag": "evac", "zh": "美國關閉基輔大使館", "en": "US closes its Kyiv embassy" },
+    { "date": "2022/02/20", "dday": 4,   "tag": "warn", "zh": "美國最後一次警告", "en": "The final US warning" },
+    { "date": "2022/02/24", "dday": 0,   "tag": "war",  "zh": "清晨，俄羅斯全面入侵烏克蘭", "en": "At dawn, Russia launches its full-scale invasion" }
+  ],
+  "tags": {
+    "mil":  { "zh": "軍事", "en": "Military" },
+    "warn": { "zh": "警告", "en": "Warning" },
+    "evac": { "zh": "撤離", "en": "Evacuation" },
+    "logi": { "zh": "後勤", "en": "Logistics" },
+    "war":  { "zh": "開戰", "en": "War" }
+  }
+}

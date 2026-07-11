@@ -1,0 +1,142 @@
+{
+ "_comment": "Level definitions. The level itself is computed by pipeline/levels.py from indicator statuses — never stored, never model-chosen. ink: text color that sits on the level color fill.",
+ "levels": [
+  {
+   "n": 1,
+   "zh": "平時",
+   "en": "Calm",
+   "sub": "CALM",
+   "badge_zh": "綠燈",
+   "badge_en": "GREEN",
+   "color": "--l1",
+   "track": "--l1t",
+   "ink": "light",
+   "desc_zh": "例行軍演與言詞交鋒，屬長期背景噪音。目前沒有任何指標出現異常跡象。",
+   "desc_en": "Routine exercises and rhetoric — long-term background noise. No indicator currently shows unusual signs.",
+   "trigger_zh": "例行軍演與言詞交鋒，屬長期背景噪音。",
+   "trigger_en": "Routine exercises and rhetoric — long-term background noise.",
+   "do_zh": "知道這個網站存在就好。",
+   "do_en": "Just know this page exists.",
+   "chips_zh": [
+    "把本站加入書籤",
+    "約定家庭緊急聯絡群組",
+    "看一次烏克蘭時間軸"
+   ],
+   "chips_en": [
+    "Bookmark this page",
+    "Agree on a family emergency chat",
+    "Read the Ukraine timeline once"
+   ]
+  },
+  {
+   "n": 2,
+   "zh": "留意",
+   "en": "Elevated",
+   "sub": "ELEVATED",
+   "badge_zh": "黃燈",
+   "badge_en": "AMBER",
+   "color": "--l2",
+   "track": "--l2t",
+   "ink": "dark",
+   "desc_zh": "背景張力升高：演習與言詞警告增加，但尚未出現「撤離級」訊號——沒有任何國家撤離駐台使館眷屬，也沒有「勿前往」等級的旅遊警示。適合做低成本的預先準備。",
+   "desc_en": "Background tension is elevated: exercises and verbal warnings are up, but no evacuation-class signal has appeared — no country has withdrawn embassy dependents from Taipei, and no \"do not travel\" advisory is in effect. A good moment for low-cost preparation.",
+   "trigger_zh": "演習規模／頻率異常，出現公開情報警告。",
+   "trigger_en": "Unusual exercise scale or tempo; public intelligence warnings appear.",
+   "do_zh": "備妥證件、現金、藥品清單。",
+   "do_en": "Documents, cash, medication list.",
+   "chips_zh": [
+    "證件影本雲端備份",
+    "兩週藥品與現金",
+    "家庭聯絡計畫"
+   ],
+   "chips_en": [
+    "Back up documents",
+    "2 weeks meds & cash",
+    "Family contact plan"
+   ]
+  },
+  {
+   "n": 3,
+   "zh": "警戒",
+   "en": "Serious",
+   "sub": "SERIOUS",
+   "badge_zh": "橘燈",
+   "badge_en": "ORANGE",
+   "color": "--l3",
+   "track": "--l3t",
+   "ink": "light",
+   "desc_zh": "多項指標同時惡化，或出現無法用演習解釋的動員訊號（持續集結、後勤動員）。現在是完成所有準備的窗口。",
+   "desc_en": "Multiple indicators are deteriorating at once, or mobilization signals exercises can't explain (sustained buildup, logistics). This is the window to finish every preparation.",
+   "trigger_zh": "持續性兵力集結獲多方證實，後勤動員跡象（如血漿儲備）。",
+   "trigger_en": "Sustained buildup confirmed by multiple sources; logistics mobilization signs (e.g., blood supplies).",
+   "do_zh": "打包避難包，確認離境選項。",
+   "do_en": "Pack a go-bag; confirm exit options.",
+   "chips_zh": [
+    "打包避難包",
+    "確認航班與住處選項",
+    "下載離線地圖"
+   ],
+   "chips_en": [
+    "Pack the go-bag",
+    "Confirm flights & stays",
+    "Download offline maps"
+   ]
+  },
+  {
+   "n": 4,
+   "zh": "高度警戒",
+   "en": "Critical",
+   "sub": "CRITICAL",
+   "badge_zh": "紅燈",
+   "badge_en": "RED",
+   "color": "--l4",
+   "track": "--l4t",
+   "ink": "light",
+   "desc_zh": "撤離級訊號已經出現：有政府開始縮編使館、撤離眷屬，或發布「勿前往」警示。烏克蘭經驗：此階段距開戰約一個月。",
+   "desc_en": "Evacuation-class signals have appeared: governments are drawing down embassies, withdrawing dependents, or issuing \"do not travel\" advisories. In Ukraine, war followed this stage by about a month.",
+   "trigger_zh": "撤離級訊號：使館縮編、撤離眷屬、「勿前往」旅遊警示。",
+   "trigger_en": "Evacuation-class signals: embassy drawdowns, dependents withdrawn, \"do not travel\" advisories.",
+   "do_zh": "非必要滯留者離境或移往低風險區。",
+   "do_en": "Leave if you can; relocate away from military targets.",
+   "chips_zh": [
+    "可離境者盡快離境",
+    "移往遠離軍事目標處",
+    "加購糧水與燃料"
+   ],
+   "chips_en": [
+    "Leave if you can",
+    "Move away from military targets",
+    "Stock food, water, fuel"
+   ]
+  },
+  {
+   "n": 5,
+   "zh": "撤離",
+   "en": "Imminent",
+   "sub": "IMMINENT",
+   "badge_zh": "紫燈",
+   "badge_en": "VIOLET",
+   "color": "--l5",
+   "track": "--l5t",
+   "ink": "light",
+   "desc_zh": "使館關閉、最後通牒式警告——烏克蘭經驗：剩下不到兩週。立即執行你的計畫，不要再等待確認。",
+   "desc_en": "Embassies are closing; final warnings are issuing — in Ukraine, under two weeks remained. Execute your plan immediately; stop waiting for certainty.",
+   "trigger_zh": "使館關閉、最後通牒式警告——烏克蘭經驗：剩下不到兩週。",
+   "trigger_en": "Embassies close; final warnings issue — in Ukraine, under two weeks remained.",
+   "do_zh": "立即執行你的計畫，不再等待確認。",
+   "do_en": "Execute your plan immediately. Stop waiting for certainty.",
+   "chips_zh": [
+    "立即執行離境計畫",
+    "留守者進入避難模式",
+    "保持通訊與收音機暢通"
+   ],
+   "chips_en": [
+    "Execute your exit plan now",
+    "Shelter mode if staying",
+    "Keep comms & radio live"
+   ]
+  }
+ ],
+ "rule_zh": "第 5 級：關閉使館，或兩項以上撤離級指標觸發 · 第 4 級：任一撤離級指標觸發 · 第 3 級：任一一般指標觸發，或四項以上出現跡象 · 第 2 級：任一指標出現跡象 · 第 1 級：其餘情況",
+ "rule_en": "L5: embassies close, or 2+ evacuation-class triggered · L4: any evacuation-class triggered · L3: any other indicator triggered, or 4+ showing signs · L2: any indicator showing signs · L1: otherwise"
+}

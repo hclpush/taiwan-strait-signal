@@ -1,0 +1,11 @@
+{
+ "_comment": "Site meta. demo=true keeps the mockup watermark and demo notes; flipped to false after the supervised first assessment. lastReviewed is set by apply.py on every successful run.",
+ "site_zh": "台海燈號",
+ "site_en": "STRAIT SIGNAL",
+ "lastReviewed": "2026-07-11",
+ "demo": false,
+ "cadence_zh": "最後審視 · 每週更新",
+ "cadence_en": "Last reviewed · updated weekly",
+ "threads_url": "#",
+ "deploy_url": "https://hclpush.github.io/taiwan-strait-signal/"
+}

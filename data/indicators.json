@@ -1,0 +1,396 @@
+{
+ "_comment": "Single source of truth for indicator statuses. status: 0=未觸發 not triggered, 1=出現跡象 signs, 2=已觸發 triggered. class: normal | evac | final (final implies evac). Only pipeline/apply.py may change status/note/sources/history.",
+ "categories": [
+  {
+   "id": "mil",
+   "zh": "軍事動員",
+   "en": "Military Mobilization",
+   "tag": "MILITARY"
+  },
+  {
+   "id": "evac",
+   "zh": "外交與撤離",
+   "en": "Diplomatic & Evacuation",
+   "tag": "EVACUATION-CLASS"
+  },
+  {
+   "id": "warn",
+   "zh": "官方警告",
+   "en": "Official Warnings",
+   "tag": "WARNINGS"
+  },
+  {
+   "id": "econ",
+   "zh": "經濟與資訊",
+   "en": "Economy & Information",
+   "tag": "ECONOMY / INFO"
+  }
+ ],
+ "indicators": [
+  {
+   "id": "M1",
+   "category": "mil",
+   "class": "normal",
+   "status": 0,
+   "name_zh": "對台當面兵力異常集結",
+   "name_en": "Unusual force concentration opposite Taiwan",
+   "note_zh": "2026/07 公開報導與西方國防部門評估未見對台當面兵力異常集結。",
+   "note_en": "No open-source reporting of unusual force concentration opposite Taiwan as of July 2026.",
+   "analog": {
+    "label": "烏克蘭 D−117",
+    "zh": "2021/10/30 邊境調動軍隊",
+    "en": "2021/10/30 Border troop movements"
+   },
+   "queries": [
+    "PLA troop buildup Fujian coast opposite Taiwan",
+    "China military concentration Taiwan strait satellite imagery",
+    "解放軍 台海 兵力集結"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "M2",
+   "category": "mil",
+   "class": "normal",
+   "status": 1,
+   "name_zh": "大規模實彈演習頻率",
+   "name_en": "Large-scale live-fire exercise tempo",
+   "note_zh": "2025/12 共軍舉行迄今最大規模環台實彈演習，模擬封鎖及打擊港口與能源設施，演習頻率高於常態。",
+   "note_en": "PLA held its largest-ever drills encircling Taiwan in Dec 2025, simulating blockade and strikes on ports and energy facilities; exercise tempo remains elevated.",
+   "analog": {
+    "label": "烏克蘭 D−83",
+    "zh": "2021/12/03 17.5 萬俄軍集結",
+    "en": "2021/12/03 175k troops massed"
+   },
+   "queries": [
+    "PLA live-fire exercise Taiwan strait",
+    "China military drills encircling Taiwan",
+    "共軍 環台 軍演 實彈"
+   ],
+   "sources": [
+    {
+     "url": "https://www.reuters.com/world/china/china-launches-live-firing-drills-around-taiwan-its-biggest-war-games-date-2025-12-30/",
+     "domain": "reuters.com"
+    },
+    {
+     "url": "https://www.bbc.com/news/articles/c24q5pg8m07o",
+     "domain": "bbc.com"
+    },
+    {
+     "url": "https://www.bbc.com/news/articles/c87l7xjp235o",
+     "domain": "bbc.com"
+    }
+   ],
+   "history": []
+  },
+  {
+   "id": "M3",
+   "category": "mil",
+   "class": "normal",
+   "status": 0,
+   "name_zh": "醫療後勤動員（血漿儲備）",
+   "name_en": "Medical logistics (blood supplies)",
+   "note_zh": "2026/07 未見軍事性血液儲備或醫療後勤動員訊號；現有報導僅涉民用長期血荒。",
+   "note_en": "No sign of military blood-supply or medical logistics mobilization as of July 2026; available reporting covers only a chronic civilian shortage.",
+   "analog": {
+    "label": "烏克蘭 D−26",
+    "zh": "2022/01/29 前線儲備血漿",
+    "en": "2022/01/29 Blood plasma staged"
+   },
+   "queries": [
+    "China blood supplies military hospitals mobilization",
+    "PLA medical logistics wartime preparation",
+    "解放軍 血漿 戰備 醫療動員"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "M4",
+   "category": "mil",
+   "class": "normal",
+   "status": 0,
+   "name_zh": "民用滾裝船／漁船徵用",
+   "name_en": "Civilian RO-RO ferry requisition",
+   "note_zh": "滾裝船參與共軍演訓自 2019 年起已屬常態背景；2026/07 未見大規模徵用或異常集結跡象。",
+   "note_en": "RO-RO ferries joining PLA exercises since 2019 is a known baseline; no signs of mass requisition or unusual assembly as of July 2026.",
+   "analog": {
+    "special": true,
+    "label_zh": "台海特有指標",
+    "label_en": "Strait-specific",
+    "zh": "烏克蘭無對應事件",
+    "en": "No Ukraine analog"
+   },
+   "queries": [
+    "China civilian ferries requisition military exercise",
+    "RO-RO ferry PLA amphibious mobilization",
+    "滾裝船 徵用 渡海 演練"
+   ],
+   "sources": [
+    {
+     "url": "https://www.reuters.com/graphics/USA-CHINA/TAIWAN-INVASION/zjpqdekmlvx/",
+     "domain": "reuters.com"
+    }
+   ],
+   "history": []
+  },
+  {
+   "id": "E1",
+   "category": "evac",
+   "class": "evac",
+   "status": 0,
+   "name_zh": "各國縮減駐台使館規模",
+   "name_en": "Embassy drawdowns in Taipei",
+   "note_zh": "美國全球性使館裁員屬行政改革，與台海風險無關；2026/07 未見各國縮減駐台機構規模。",
+   "note_en": "US global embassy staff cuts stem from an administrative overhaul, not Taiwan risk; no drawdown of missions in Taipei observed as of July 2026.",
+   "analog": {
+    "label": "烏克蘭 D−38",
+    "zh": "2022/01/17 俄縮編駐烏使館",
+    "en": "2022/01/17 Russia cuts Kyiv embassy"
+   },
+   "queries": [
+    "embassy drawdown Taipei staff reduction",
+    "AIT American Institute Taiwan staff drawdown",
+    "駐台 使館 縮編 撤離"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "E2",
+   "category": "evac",
+   "class": "evac",
+   "status": 0,
+   "name_zh": "撤離外交官眷屬、敦促公民離境",
+   "name_en": "Dependents withdrawn; citizens urged to leave",
+   "note_zh": "2026/07 未見各國撤離駐台外交官眷屬或敦促公民離台；相關報導均涉他國情勢。",
+   "note_en": "No withdrawals of diplomatic dependents from Taiwan or calls for citizens to leave as of July 2026; cited departures concern other countries.",
+   "analog": {
+    "label": "烏克蘭 D−31",
+    "zh": "2022/01/24 美撤離使館家眷",
+    "en": "2022/01/24 US withdraws dependents"
+   },
+   "queries": [
+    "State Department orders departure family members Taiwan",
+    "citizens urged to leave Taiwan embassy dependents",
+    "撤離 眷屬 敦促 公民 離台"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "E3",
+   "category": "evac",
+   "class": "final",
+   "status": 0,
+   "name_zh": "關閉大使館／代表處",
+   "name_en": "Embassies close outright",
+   "note_zh": "2026/07 無任何國家關閉駐台使館或代表處。",
+   "note_en": "No embassies or representative offices in Taipei have closed as of July 2026.",
+   "analog": {
+    "label": "烏克蘭 D−10",
+    "zh": "2022/02/14 美關閉基輔使館",
+    "en": "2022/02/14 US closes Kyiv embassy"
+   },
+   "queries": [
+    "embassy closes Taipei operations suspended",
+    "diplomatic mission Taiwan evacuation closure",
+    "關閉 代表處 駐台"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "E4",
+   "category": "evac",
+   "class": "evac",
+   "status": 0,
+   "name_zh": "企業與航空撤離訊號",
+   "name_en": "Corporate & airline withdrawal",
+   "note_zh": "2026/07 公開報導未見外商撤離駐台人員、航空公司停飛或戰爭險費率異常。",
+   "note_en": "No public reports of corporate personnel withdrawals, airline suspensions, or war-risk premium spikes as of July 2026.",
+   "analog": {
+    "label": "烏克蘭 D−12",
+    "zh": "2022/02/12 KLM 停飛基輔",
+    "en": "2022/02/12 KLM halts Kyiv flights"
+   },
+   "queries": [
+    "airlines suspend Taiwan flights war risk",
+    "war risk insurance premiums Taiwan strait shipping",
+    "外商 撤離 台灣 停飛"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "W1",
+   "category": "warn",
+   "class": "normal",
+   "status": 1,
+   "name_zh": "美方情報體系公開警告",
+   "name_en": "US intelligence public warnings",
+   "note_zh": "美情報體系公開警告：習近平要求共軍 2027 年前具備犯台能力；DIA 不預期今年全面犯台，惟離島威脅或升高。",
+   "note_en": "US intel: Xi ordered PLA readiness by 2027; DIA does not expect a full invasion this year but flags possible rising threats to Taiwan's outlying islands.",
+   "analog": {
+    "label": "烏克蘭 D−104",
+    "zh": "2021/11/12 美首次公開警告",
+    "en": "2021/11/12 First US warning"
+   },
+   "queries": [
+    "US intelligence warning China Taiwan invasion timeline",
+    "CIA DNI testimony China Taiwan attack",
+    "美國 情報 警告 台海"
+   ],
+   "sources": [
+    {
+     "url": "https://apnews.com/article/russia-ukraine-taiwan-politics-united-states-government-eaf869eb617c6c356b2708607ed15759",
+     "domain": "apnews.com"
+    },
+    {
+     "url": "https://www.cna.com.tw/news/aopl/202505280121.aspx",
+     "domain": "cna.com.tw"
+    }
+   ],
+   "history": []
+  },
+  {
+   "id": "W2",
+   "category": "warn",
+   "class": "evac",
+   "status": 0,
+   "name_zh": "旅遊警示升至「勿前往」",
+   "name_en": "Travel advisory hits \"Do Not Travel\"",
+   "note_zh": "美國務院對台旅遊警示未達「勿前往」等級；2026/07 未見異常變化。",
+   "note_en": "US State Department travel advisory for Taiwan remains below 'Do Not Travel'; no unusual change as of July 2026.",
+   "analog": {
+    "label": "烏克蘭 D−65",
+    "zh": "2021/12/21 第 4 級「勿前往」",
+    "en": "2021/12/21 Level 4 issued"
+   },
+   "queries": [
+    "State Department travel advisory Taiwan level",
+    "do not travel advisory Taiwan",
+    "旅遊警示 台灣 勿前往"
+   ],
+   "sources": [],
+   "history": [],
+   "direct_urls": [
+    "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/taiwan-travel-advisory.html"
+   ]
+  },
+  {
+   "id": "W3",
+   "category": "warn",
+   "class": "normal",
+   "status": 1,
+   "name_zh": "國家元首點名式警告",
+   "name_en": "Head-of-state warnings by name",
+   "note_zh": "美國防長公開稱中國對台威脅「迫近」；台方指攻擊預警時間縮短。尚無國家元首點名式警告。",
+   "note_en": "US defense secretary called China's threat to Taiwan 'imminent'; Taiwan says attack warning time is shortening. No head-of-state warning by name yet.",
+   "analog": {
+    "label": "烏克蘭 D−36",
+    "zh": "2022/01/19 拜登：俄將入侵",
+    "en": "2022/01/19 Biden: Russia will invade"
+   },
+   "queries": [
+    "president warns China will invade Taiwan",
+    "White House warning imminent Taiwan attack",
+    "總統 警告 中國 侵台"
+   ],
+   "sources": [
+    {
+     "url": "https://www.bbc.com/news/articles/c071xm4x7g7o",
+     "domain": "bbc.com"
+    },
+    {
+     "url": "https://www.reuters.com/world/china/taiwan-says-warning-time-any-china-attack-is-shortening-2026-06-24/",
+     "domain": "reuters.com"
+    }
+   ],
+   "history": [
+    {
+     "date": "2026-07-11",
+     "from": 0,
+     "to": 1,
+     "note_zh": "美國防長公開稱中國對台威脅「迫近」；台方指攻擊預警時間縮短。尚無國家元首點名式警告。"
+    }
+   ]
+  },
+  {
+   "id": "X1",
+   "category": "econ",
+   "class": "normal",
+   "status": 0,
+   "name_zh": "戰略物資異常囤積（糧食、能源、金屬）",
+   "name_en": "Strategic stockpiling surge (grain, energy, metals)",
+   "note_zh": "2026/07 公開資料未見糧食、能源或金屬進口異常囤積。",
+   "note_en": "No abnormal stockpiling of grain, energy, or metals visible in open-source data as of July 2026.",
+   "analog": {
+    "special": true,
+    "label_zh": "俄羅斯 2021 全年",
+    "label_en": "Russia, through 2021",
+    "zh": "外儲去美元化",
+    "en": "De-dollarizing reserves"
+   },
+   "queries": [
+    "China strategic stockpiling grain oil reserves surge",
+    "China sanctions proofing gold de-dollarization",
+    "中國 戰略 儲備 囤積"
+   ],
+   "sources": [],
+   "history": []
+  },
+  {
+   "id": "X2",
+   "category": "econ",
+   "class": "normal",
+   "status": 0,
+   "name_zh": "對台網攻與認知作戰激增",
+   "name_en": "Cyberattack & influence-op surge",
+   "note_zh": "對台認知作戰與網攻屬長期持續態勢；2026/07 未見明顯激增。",
+   "note_en": "Cyber and influence operations against Taiwan continue at a chronic baseline; no clear surge observed as of July 2026.",
+   "analog": {
+    "label": "烏克蘭 D−41",
+    "zh": "2022/01/14 政府網站遭攻擊",
+    "en": "2022/01/14 Gov sites defaced"
+   },
+   "queries": [
+    "cyberattack surge Taiwan government infrastructure",
+    "Taiwan disinformation influence operations spike",
+    "台灣 網攻 認知作戰 激增"
+   ],
+   "sources": [
+    {
+     "url": "https://www.mnd.gov.tw/File/53918",
+     "domain": "mnd.gov.tw"
+    }
+   ],
+   "history": []
+  },
+  {
+   "id": "X3",
+   "category": "econ",
+   "class": "normal",
+   "status": 0,
+   "name_zh": "官媒戰爭動員敘事",
+   "name_en": "State-media war-mobilization narrative",
+   "note_zh": "2026/07 官媒未見轉向「不得不戰」之戰爭動員敘事。",
+   "note_en": "No shift in Chinese state media toward war-mobilization rhetoric as of July 2026.",
+   "analog": {
+    "special": true,
+    "label_zh": "普遍前兆",
+    "label_en": "Universal precursor",
+    "zh": "開戰合理化敘事",
+    "en": "Casus belli building"
+   },
+   "queries": [
+    "Chinese state media rhetoric war Taiwan escalation",
+    "People's Daily Global Times Taiwan war language",
+    "官媒 武統 輿論 動員"
+   ],
+   "sources": [],
+   "history": []
+  }
+ ]
+}

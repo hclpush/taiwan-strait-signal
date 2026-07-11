@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+runs/
+site/dist/
+.DS_Store
+*.pyc
+.pytest_cache/
