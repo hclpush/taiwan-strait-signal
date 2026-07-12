@@ -6,6 +6,6 @@
  "demo": false,
  "cadence_zh": "最後審視 · 每週更新",
  "cadence_en": "Last reviewed · updated weekly",
- "threads_url": "#",
+ "credit_url": "https://github.com/hclpush",
  "deploy_url": "https://hclpush.github.io/taiwan-strait-signal/"
 }

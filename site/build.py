@@ -216,7 +216,7 @@ def build() -> Path:
         "{{RULE_ZH}}": esc(data["levels"]["rule_zh"]),
         "{{RULE_EN}}": esc(data["levels"]["rule_en"]),
         "{{TIMELINE}}": "\n".join(tl),
-        "{{THREADS_URL}}": safe_url(meta["threads_url"]) if meta["threads_url"] != "#" else "#",
+        "{{CREDIT_URL}}": safe_url(meta["credit_url"]),
         "{{FOOT_RIGHT}}": foot_right,
     }
     for token, value in subs.items():

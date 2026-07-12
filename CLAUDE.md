@@ -54,7 +54,8 @@ python3 pipeline/email_alert.py --test # test the alert path
 Built and tested (32 tests); real Level 2 assessment in `data/`; GitHub Actions
 pipeline + Pages deploy written. Remaining (human steps): create the public
 GitHub repo and push · add the two Actions secrets · set Pages source to
-"GitHub Actions" · supervised first weekly run (workflow_dispatch dry-run) ·
-set `threads_url` in `data/meta.json`.
+"GitHub Actions" · supervised first weekly run (workflow_dispatch dry-run).
+Footer credit links to the maintainer's GitHub profile (`credit_url` in
+`data/meta.json`).
 Full step-by-step handover (private): Obsidian vault
 `600_Project/strait-signal/2026-07-11-handover.md`.
