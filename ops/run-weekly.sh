@@ -18,7 +18,7 @@
 set -u
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-CLAUDE_APP_ROOT="/Users/user/Library/Application Support/Claude/claude-code"
+CLAUDE_APP_ROOT="$HOME/Library/Application Support/Claude/claude-code"
 RUN_DIR="$REPO/runs/$(date +%F)"
 LOGDIR="$HOME/.claude/logs"
 FAILCOUNT_FILE="$REPO/runs/.failcount"
@@ -29,12 +29,27 @@ MODEL_FLAG=()
 mkdir -p "$LOGDIR" "$RUN_DIR"
 
 # ── Binary discovery (same as compile-runner) ────────────────────────────────
-LATEST_VERSION=$(ls "$CLAUDE_APP_ROOT" 2>/dev/null | sort -V | tail -1)
-REAL_CLAUDE="$CLAUDE_APP_ROOT/$LATEST_VERSION/claude.app/Contents/MacOS/claude"
-if [ ! -x "$REAL_CLAUDE" ]; then
-    echo "ERROR: claude binary not found under $CLAUDE_APP_ROOT" >&2
-    exit 1
-fi
+# The desktop app has used two install layouts (Oct 2026 switch broke the old lookup):
+#   old: claude-code/<version>/claude.app/Contents/MacOS/claude
+#   new: claude-code/<version>/<build-hash>/claude.app/Contents/MacOS/claude
+# Walk versions newest-first and accept either; dump the folder on failure.
+resolve_claude() {
+    local version vdir newest
+    for version in $(ls "$CLAUDE_APP_ROOT" 2>/dev/null | sort -V -r); do
+        vdir="$CLAUDE_APP_ROOT/$version"
+        if [ -x "$vdir/claude.app/Contents/MacOS/claude" ]; then
+            echo "$vdir/claude.app/Contents/MacOS/claude"; return 0
+        fi
+        newest=$(ls -td "$vdir"/*/claude.app/Contents/MacOS/claude 2>/dev/null | head -1)
+        if [ -n "$newest" ] && [ -x "$newest" ]; then
+            echo "$newest"; return 0
+        fi
+    done
+    echo "ERROR: claude binary not found under $CLAUDE_APP_ROOT. Contents:" >&2
+    find "$CLAUDE_APP_ROOT" -maxdepth 4 2>&1 | sed 's/^/  /' >&2
+    return 1
+}
+REAL_CLAUDE="$(resolve_claude)" || exit 1
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
 cd "$REPO" || exit 1
